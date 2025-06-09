@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlasSkin - Blog</title>
+    <!-- Font Awesome (incluyendo íconos animados) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.cdnfonts.com/css/twentieth-century" rel="stylesheet">
+    <style>
+        :root {
+            --rosa-claro: #f9edec;
+            --rosa-medio: #da96be;
+            --lila: #bea5cc;
+            --azul-claro: #a3b4db;
+            --azul-cielo: #88c3ea;
+        }
+        
+        body {
+            font-family: 'Twentieth Century', sans-serif;
+            background-color: var(--rosa-claro);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--rosa-medio), var(--lila));
+            padding: 30px 0 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .logo-container {
+            max-width: 250px;
+            margin: 0 auto 15px;
+        }
+        
+        .logo-img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        /* Nav (igual que en otras páginas) */
+        nav {
+            background-color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* Contenedor principal del blog */
+        .blog-section {
+            padding: 60px 20px;
+            flex: 1;
+        }
+        
+        .section-title {
+            text-align: center;
+            color: var(--rosa-medio);
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--rosa-medio), var(--azul-cielo));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        /* Artículos del blog */
+        .blog-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .blog-post {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            transition: transform 0.3s;
+        }
+        
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+        
+        .post-image {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .blog-post:hover .post-image img {
+            transform: scale(1.05);
+        }
+        
+        .post-content {
+            padding: 30px;
+        }
+        
+        .post-date {
+            color: var(--lila);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-title {
+            font-size: 1.8rem;
+            color: #444;
+            margin-bottom: 15px;
+        }
+        
+        .post-excerpt {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            color: var(--azul-cielo);
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .read-more:hover {
+            color: var(--rosa-medio);
+        }
+        
+        /* Íconos animados */
+        .animated-icon {
+            display: inline-block;
+            margin-right: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .spin {
+            animation: spin 4s linear infinite;
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Categorías */
+        .categories {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .categories h3 {
+            color: var(--rosa-medio);
+            border-bottom: 2px solid var(--lila);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .category-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .category-list li {
+            margin-bottom: 10px;
+        }
+        
+        .category-list a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-list a:hover {
+            color: var(--azul-cielo);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--lila);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .post-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Dropdown Menu */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 250px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        z-index: 1;
+        left: 0;
+        top: 100%;
+        padding: 10px 0;
+    }
+    
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: fadeIn 0.3s;
+    }
+    
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu-content {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        background-color: white;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+        border-radius: 0 8px 8px 8px;
+        z-index: 1;
+    }
+    
+    .dropdown-submenu:hover .dropdown-submenu-content {
+        display: block;
+        animation: fadeIn 0.3s;
+    }
+    
+    .dropdown-submenu::after {
+        content: "\f054";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 0.7rem;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--lila);
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Contador del carrito */
+    .cart-counter {
+        display: none;
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--azul-cielo);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    nav li:last-child {
+        position: relative;
+    }
+    /* === Añade estos estilos en tu sección CSS === */
+    
+    /* Estructura base del nav (igual que en otras páginas) */
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+    }
+    
+    nav li {
+        margin: 0 15px;
+        position: relative;
+    }
+    
+    nav a {
+        text-decoration: none;
+        color: var(--rosa-medio);
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        position: relative;
+    }
+    
+    nav a:hover {
+        color: var(--azul-cielo);
+        background-color: var(--rosa-claro);
+    }
+    
+    nav a.active {
+        color: var(--azul-cielo);
+        background-color: var(--rosa-claro);
+    }
+    
+    /* Estilos responsive para el nav */
+    @media (max-width: 768px) {
+        nav ul {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        nav li {
+            margin: 5px 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .dropdown-content {
+            position: static;
+            width: 100%;
+            box-shadow: none;
+            border-radius: 0;
+            animation: none;
+            display: none;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-submenu-content {
+            position: static;
+            box-shadow: none;
+            padding-left: 20px;
+        }
+        
+        .dropdown-submenu::after {
+            display: none;
+        }
+    }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/25ZnshJ1/logo.jpg" alt="GlasSkin Logo" class="logo-img">
+        </div>
+        <p class="tagline">Consejos expertos para tu rutina de belleza</p>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+           
+        </div>
+    </nav>
+    
+    <section class="blog-section">
+        <h2 class="section-title">
+            <i class="fas fa-book-open animated-icon pulse" style="color: var(--rosa-medio);"></i> 
+            Nuestro Blog
+        </h2>
+        
+        <div class="blog-container">
+            <!-- Artículo 1 -->
+            <article class="blog-post">
+                <div class="post-image">
+                    <img src="https://infinitekparis.com/wp-content/uploads/2023/01/mujer-crema-facial-woman-face-cream-lifestyle-infinitek.jpg" alt="Rutina de cuidado facial">
+                </div>
+                <div class="post-content">
+                    <p class="post-date">
+                        <i class="far fa-calendar-alt animated-icon" style="color: var(--lila);"></i> 
+                        15 Mayo 2024
+                    </p>
+                    <h3 class="post-title">La rutina perfecta para una piel glass skin</h3>
+                    <p class="post-excerpt">Descubre los 5 pasos esenciales para lograr ese efecto de piel cristalina que tanto deseas. Incluye recomendaciones de productos y técnicas de aplicación.</p>
+                    <a href="#" class="read-more">
+                        Leer más 
+                        <i class="fas fa-arrow-right animated-icon" style="animation-delay: 0.3s;"></i>
+                    </a>
+                </div>
+            </article>
+            
+            <!-- Artículo 2 -->
+            <article class="blog-post">
+                <div class="post-image">
+                    <img src="https://uyubeauty.com/cdn/shop/articles/Ingredientes_Skincare.png?v=1683924274&width=2048" alt="Ingredientes cosméticos">
+                </div>
+                <div class="post-content">
+                    <p class="post-date">
+                        <i class="far fa-calendar-alt animated-icon" style="color: var(--lila);"></i> 
+                        28 Abril 2024
+                    </p>
+                    <h3 class="post-title">Ingredientes que debes buscar en tus productos</h3>
+                    <p class="post-excerpt">Ácido hialurónico, niacinamida, vitamina C... Te explicamos qué hace cada ingrediente estrella y cómo combinarlos para maximizar sus beneficios.</p>
+                    <a href="#" class="read-more">
+                        Leer más 
+                        <i class="fas fa-arrow-right animated-icon" style="animation-delay: 0.3s;"></i>
+                    </a>
+                </div>
+            </article>
+            
+            <!-- Artículo 3 -->
+            <article class="blog-post">
+                <div class="post-image">
+                    <img src="https://media.vogue.mx/photos/628822c488ba7bf2b3354e88/2:3/w_2560%2Cc_limit/maquillaje-natural-tendencias.jpg" alt="Maquillaje minimalista">
+                </div>
+                <div class="post-content">
+                    <p class="post-date">
+                        <i class="far fa-calendar-alt animated-icon" style="color: var(--lila);"></i> 
+                        10 Abril 2024
+                    </p>
+                    <h3 class="post-title">Maquillaje minimalista: Menos es más</h3>
+                    <p class="post-excerpt">Tutorial paso a paso para un look fresco y natural que realza tu belleza sin cubrir tu piel. Perfecto para el día a día.</p>
+                    <a href="#" class="read-more">
+                        Leer más 
+                        <i class="fas fa-arrow-right animated-icon" style="animation-delay: 0.3s;"></i>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f spin" style="animation-duration: 6s;"></i></a>
+            <a href="#"><i class="fab fa-instagram spin" style="animation-duration: 8s;"></i></a>
+            <a href="#"><i class="fab fa-tiktok pulse"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="copyright">© 2024 GlasSkin. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+    // Manejo de dropdowns en móviles
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const content = this.querySelector('.dropdown-content');
+                    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

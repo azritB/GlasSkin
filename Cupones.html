@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlasSkin - Cupones</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.cdnfonts.com/css/twentieth-century" rel="stylesheet">
+    <!-- Lottie para íconos animados -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <style>
+        :root {
+            --rosa-claro: #f9edec;
+            --rosa-medio: #da96be;
+            --lila: #bea5cc;
+            --azul-claro: #a3b4db;
+            --azul-cielo: #88c3ea;
+        }
+
+        body {
+            font-family: 'Twentieth Century', sans-serif;
+            background-color: var(--rosa-claro);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header (igual que en otras páginas) */
+        header {
+            background: linear-gradient(135deg, var(--rosa-medio), var(--lila));
+            padding: 30px 0 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            max-width: 250px;
+            margin: 0 auto 15px;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+
+        /* Marquesina animada */
+        .marquee {
+            background: linear-gradient(to right, var(--rosa-medio), var(--azul-cielo));
+            color: white;
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Sección de cupones */
+        .coupons-section {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--rosa-medio);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--rosa-medio), var(--azul-cielo));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Grid de cupones */
+        .coupons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .coupon-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .coupon-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .coupon-header {
+            background: linear-gradient(135deg, var(--lila), var(--azul-cielo));
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .coupon-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 10px;
+        }
+
+        .coupon-code {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 10px 0;
+            background: white;
+            color: var(--rosa-medio);
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .coupon-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .coupon-desc {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .coupon-timer {
+            font-size: 0.9rem;
+            color: var(--lila);
+            font-weight: bold;
+        }
+
+        .coupon-btn {
+            background: var(--azul-cielo);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 15px;
+        }
+
+        .coupon-btn:hover {
+            background: var(--rosa-medio);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--lila);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .coupons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* === Estilos del Nav (igual que en otras páginas) === */
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            background-color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+
+        nav li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--rosa-medio);
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--azul-cielo);
+            background-color: var(--rosa-claro);
+        }
+
+        nav a.active {
+            color: var(--azul-cielo);
+            background-color: var(--rosa-claro);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 250px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            z-index: 1;
+            left: 0;
+            top: 100%;
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu-content {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            border-radius: 0 8px 8px 8px;
+            z-index: 1;
+        }
+
+        .dropdown-submenu:hover .dropdown-submenu-content {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .dropdown-submenu::after {
+            content: "\f054";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 0.7rem;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--lila);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Contador del carrito */
+        .cart-counter {
+            display: none;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--azul-cielo);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown-content {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                animation: none;
+                display: none;
+            }
+            
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+            
+            .dropdown-submenu-content {
+                position: static;
+                box-shadow: none;
+                padding-left: 20px;
+            }
+            
+            .dropdown-submenu::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/25ZnshJ1/logo.jpg" alt="GlasSkin Logo" class="logo-img">
+        </div>
+        <p class="tagline">Descuentos exclusivos para tu belleza</p>
+    </header>
+
+    <!-- Marquesina animada -->
+    <div class="marquee">
+        <div class="marquee-content">
+            🎉 ¡Envío gratis en compras mayores a $50! • 🏆 20% OFF en tu primera compra con el código BIENVENIDA • 💖 3x2 en labiales hasta agotar existencias •
+        </div>
+    </div>
+
+    <!-- Nav (igual que en otras páginas) -->
+    <nav>
+        <div class="nav-container">
+            
+        </div>
+    </nav>
+
+    <!-- Sección de cupones -->
+    <section class="coupons-section">
+        <h2 class="section-title">
+            <lottie-player 
+                src="https://assets6.lottiefiles.com/packages/lf20_vyL7Jr.json" 
+                background="transparent" 
+                speed="1" 
+                style="width: 60px; height: 60px; display: inline-block; vertical-align: middle;"
+                loop autoplay>
+            </lottie-player>
+            Cupones Exclusivos
+        </h2>
+
+        <div class="coupons-grid">
+            <!-- Cupón 1 -->
+            <div class="coupon-card">
+                <div class="coupon-header">
+                    <lottie-player 
+                        src="https://assets1.lottiefiles.com/packages/lf20_2znxgjyl.json" 
+                        class="coupon-icon"
+                        background="transparent" 
+                        speed="1"
+                        loop autoplay>
+                    </lottie-player>
+                    <div class="coupon-code">GLASSKIN20</div>
+                    <p>20% OFF en toda la tienda</p>
+                </div>
+                <div class="coupon-body">
+                    <p class="coupon-desc">Válido en todos los productos hasta el 30 de junio.</p>
+                    <p class="coupon-timer">⏳ Termina en: <span id="timer1">03:22:15</span></p>
+                    <button class="coupon-btn">Copiar código</button>
+                </div>
+            </div>
+
+            <!-- Cupón 2 -->
+            <div class="coupon-card">
+                <div class="coupon-header">
+                    <lottie-player 
+                        src="https://assets6.lottiefiles.com/packages/lf20_ysrn3wcf.json" 
+                        class="coupon-icon"
+                        background="transparent" 
+                        speed="1"
+                        loop autoplay>
+                    </lottie-player>
+                    <div class="coupon-code">ENVIOGRATIS</div>
+                    <p>Envío gratis</p>
+                </div>
+                <div class="coupon-body">
+                    <p class="coupon-desc">Para compras mayores a $30. Válido por tiempo limitado.</p>
+                    <p class="coupon-timer">⏳ Termina en: <span id="timer2">01:45:30</span></p>
+                    <button class="coupon-btn">Copiar código</button>
+                </div>
+            </div>
+
+            <!-- Cupón 3 -->
+            <div class="coupon-card">
+                <div class="coupon-header">
+                    <lottie-player 
+                        src="https://assets3.lottiefiles.com/packages/lf20_5tkzkblw.json" 
+                        class="coupon-icon"
+                        background="transparent" 
+                        speed="1"
+                        loop autoplay>
+                    </lottie-player>
+                    <div class="coupon-code">LABIAL3X2</div>
+                    <p>3x2 en labiales</p>
+                </div>
+                <div class="coupon-body">
+                    <p class="coupon-desc">Promoción válida en la colección de labiales Matte.</p>
+                    <p class="coupon-timer">⏳ Termina en: <span id="timer3">05:12:45</span></p>
+                    <button class="coupon-btn">Copiar código</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="copyright">© 2024 GlasSkin. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Temporizadores para los cupones
+        function updateTimers() {
+            const timers = [
+                { id: "timer1", hours: 3, minutes: 22, seconds: 15 },
+                { id: "timer2", hours: 1, minutes: 45, seconds: 30 },
+                { id: "timer3", hours: 5, minutes: 12, seconds: 45 }
+            ];
+
+            timers.forEach(timer => {
+                const element = document.getElementById(timer.id);
+                if (element) {
+                    let { hours, minutes, seconds } = timer;
+                    
+                    const countdown = setInterval(() => {
+                        if (seconds === 0) {
+                            if (minutes === 0) {
+                                if (hours === 0) {
+                                    clearInterval(countdown);
+                                    element.textContent = "¡Expirado!";
+                                    return;
+                                }
+                                hours--;
+                                minutes = 59;
+                            } else {
+                                minutes--;
+                            }
+                            seconds = 59;
+                        } else {
+                            seconds--;
+                        }
+
+                        element.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }, 1000);
+                }
+            });
+        }
+
+        // Copiar código de cupón
+        document.querySelectorAll('.coupon-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const couponCode = this.closest('.coupon-card').querySelector('.coupon-code').textContent;
+                navigator.clipboard.writeText(couponCode)
+                    .then(() => {
+                        this.textContent = "¡Copiado!";
+                        setTimeout(() => {
+                            this.textContent = "Copiar código";
+                        }, 2000);
+                    });
+            });
+        });
+
+        // Iniciar temporizadores al cargar la página
+        window.addEventListener('DOMContentLoaded', updateTimers);
+    </script>
+</body>
+</html>

@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlasSkin - Maquillaje</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Twentieth Century -->
+    <link href="https://fonts.cdnfonts.com/css/twentieth-century" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal/minimal.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <style>
+        :root {
+            --rosa-claro: #f9edec;
+            --rosa-medio: #da96be;
+            --lila: #bea5cc;
+            --azul-claro: #a3b4db;
+            --azul-cielo: #88c3ea;
+            --swal2-confirm-button: var(--azul-cielo) !important;
+            --swal2-cancel-button: var(--lila) !important;
+        }
+        
+        /* FIX PARA GOOGLE SITES */
+        html, body {
+            height: auto !important;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Twentieth Century', sans-serif;
+            background-color: var(--rosa-claro);
+            color: #333;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--rosa-medio), var(--lila));
+            padding: 30px 0 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .logo-container {
+            max-width: 250px;
+            margin: 0 auto 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: white;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+        
+        nav li {
+            margin: 0 15px;
+            position: relative;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--rosa-medio);
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        nav a:hover {
+            color: var(--azul-cielo);
+            background-color: var(--rosa-claro);
+        }
+        
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 250px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            z-index: 1;
+            left: 0;
+            top: 100%;
+            padding: 10px 0;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        .dropdown-submenu {
+            position: relative;
+        }
+        
+        .dropdown-submenu-content {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            border-radius: 0 8px 8px 8px;
+            z-index: 1;
+        }
+        
+        .dropdown-submenu:hover .dropdown-submenu-content {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        .dropdown-submenu-content a {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .dropdown-submenu-content a:hover {
+            color: var(--azul-cielo);
+        }
+        
+        .dropdown-submenu::after {
+            content: "\f054";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 0.7rem;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--lila);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Main Content */
+        .makeup-section {
+            padding: 60px 20px;
+            background-color: white;
+            flex: 1;
+        }
+        
+        .section-title {
+            text-align: center;
+            color: var(--rosa-medio);
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--rosa-medio), var(--azul-cielo));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Product Cards */
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .product-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--azul-cielo);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .product-info {
+            padding: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .product-category {
+            color: var(--lila);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            color: #444;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            font-size: 1.4rem;
+            color: var(--rosa-medio);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 0 20px 20px;
+        }
+        
+        .add-to-cart-btn {
+            background-color: var(--azul-claro);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            flex: 1;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: var(--azul-cielo);
+            transform: translateY(-2px);
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            flex: 1;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+        
+        .rating {
+            color: #FFC107;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* Hover Effect */
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(218,150,190,0.1), rgba(163,180,219,0.1));
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .product-card:hover::before {
+            opacity: 1;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--lila);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: auto;
+            width: 100%;
+        }
+        
+        .social-icons {
+            margin: 20px 0;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .social-icons a:hover {
+            color: var(--azul-cielo);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown-content {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                animation: none;
+                display: none;
+            }
+            
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+            
+            .dropdown-submenu-content {
+                position: static;
+                box-shadow: none;
+                padding-left: 20px;
+            }
+            
+            .dropdown-submenu::after {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .logo-container {
+                max-width: 180px;
+            }
+            
+            .products-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+
+            /* SweetAlert Custom */
+            .sweet-popup {
+                border: 2px solid var(--lila) !important;
+                border-radius: 15px !important;
+            }
+
+            .sweet-title {
+                font-family: 'Twentieth Century', sans-serif !important;
+                font-size: 1.5rem !important;
+            }
+
+            .swal2-confirm {
+                font-family: 'Twentieth Century', sans-serif !important;
+                font-weight: bold !important;
+                padding: 10px 20px !important;
+            } 
+        }
+
+        /* Contador del carrito */
+        .cart-counter {
+            display: none; /* Oculto por defecto */
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--azul-cielo);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Twentieth Century', sans-serif;
+        }
+
+        /* Asegurar que el li del carrito tenga posición relativa */
+        nav li:last-child {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/25ZnshJ1/logo.jpg" alt="GlasSkin Logo" class="logo-img">
+        </div>
+        <div class="tagline">Tu belleza, nuestra pasión</div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            
+        </div>
+    </nav>
+    
+    <section class="makeup-section">
+        <h2 class="section-title">Maquillaje</h2>
+        
+        <div class="products-container">
+            <!-- Producto 1 -->
+            <div class="product-card">
+                <a href="detalle-labial-mate.html" class="product-card-link">
+                    <div class="product-image">
+                        <span class="product-badge">Nuevo</span>
+                        <img src="https://m.media-amazon.com/images/I/61ZWv8JoX7L._SL1500_.jpg" alt="Labial Matte">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Labial</span>
+                        <h3 class="product-title">Labial Matte Duradero</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="product-description">Textura cremosa que se fija como un mate sin resecar tus labios. 8 horas de duración.</p>
+                        <div class="product-price">S/49.90</div>
+                    </div>
+                </a>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn" onclick="addToCart(
+                        'Labial Matte Duradero', 
+                        49.90, 
+                        'https://i.postimg.cc/8z5vLQ8t/labial-mate.jpg',
+                        event
+                    )">
+                        <i class="fas fa-cart-plus"></i> Añadir
+                    </button>
+                    
+                    <a href="https://wa.me/51987654321?text=¡Hola! Estoy interesad@ en el Labial Matte Duradero de GlasSkin" 
+                    class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Comprar
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Producto 2 -->
+            <div class="product-card">
+                <a href="detalle-base-liquida.html" class="product-card-link">
+                    <div class="product-image">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQejtOoHjIT80R6QZ2wefhAngYkJFyKx-bNdQ&s" alt="Base Líquida">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Base</span>
+                        <h3 class="product-title">Base Líquida Full Cover</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p class="product-description">Cobertura media a completa con acabado natural. Resistente al agua y al sudor.</p>
+                        <div class="product-price">S/89.90</div>
+                    </div>
+                </a>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn" onclick="addToCart(
+                        'Base Líquida Full Cover', 
+                        89.90, 
+                        'https://i.postimg.cc/8z5vLQ8t/base-liquida.jpg',
+                        event
+                    )">
+                        <i class="fas fa-cart-plus"></i> Añadir
+                    </button>
+                    
+                    <a href="https://wa.me/51987654321?text=¡Hola! Estoy interesad@ en la Base Líquida Full Cover de GlasSkin" 
+                    class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Comprar
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Producto 3 -->
+            <div class="product-card">
+                <a href="detalle-paleta-sombras.html" class="product-card-link">
+                    <div class="product-image">
+                        <span class="product-badge">Más vendido</span>
+                        <img src="https://kumikoreanshop.com/cdn/shop/products/Capturadepantalla2022-11-04ala_s_19.17.51.png?v=1667609289&width=1445" alt="Paleta de Sombras">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Sombras</span>
+                        <h3 class="product-title">Paleta de Sombras Neutras</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="product-description">15 tonos mate y brillantes para crear looks diurnos y nocturnos. Alta pigmentación.</p>
+                        <div class="product-price">S/120.00</div>
+                    </div>
+                </a>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn" onclick="addToCart(
+                        'Paleta de Sombras Neutras', 
+                        120.00, 
+                        'https://i.postimg.cc/8z5vLQ8t/paleta-sombras.jpg',
+                        event
+                    )">
+                        <i class="fas fa-cart-plus"></i> Añadir
+                    </button>
+                    
+                    <a href="https://wa.me/51987654321?text=¡Hola! Estoy interesad@ en la Paleta de Sombras Neutras de GlasSkin" 
+                    class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Comprar
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Producto 4 -->
+            <div class="product-card">
+                <a href="detalle-rubor-crema.html" class="product-card-link">
+                    <div class="product-image">
+                        <img src="https://m.media-amazon.com/images/I/71sQLe6e4ZL._SL1500_.jpg" alt="Rubor en Crema">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Rubor</span>
+                        <h3 class="product-title">Rubor en Crema Multiusos</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="product-description">Fórmula cremosa que funciona como rubor, sombra de ojos y labial. 3 tonos disponibles.</p>
+                        <div class="product-price">S/55.00</div>
+                    </div>
+                </a>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn" onclick="addToCart(
+                        'Rubor en Crema Multiusos', 
+                        55.00, 
+                        'https://i.postimg.cc/8z5vLQ8t/rubor-crema.jpg',
+                        event
+                    )">
+                        <i class="fas fa-cart-plus"></i> Añadir
+                    </button>
+                    
+                    <a href="https://wa.me/51987654321?text=¡Hola! Estoy interesad@ en el Rubor en Crema Multiusos de GlasSkin" 
+                    class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Comprar
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Producto 5 -->
+            <div class="product-card">
+                <a href="detalle-mascara-pestanas.html" class="product-card-link">
+                    <div class="product-image">
+                        <img src="https://belcorpperu.vtexassets.com/arquivos/ids/338687-800-800?v=638816268180330000&width=800&height=800&aspect=true" alt="Máscara de Pestañas">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Máscara</span>
+                        <h3 class="product-title">Máscara de Pestañas Volumen X10</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p class="product-description">Cepillo tipo peine que separa y define cada pestaña sin grumos. Resistente al agua.</p>
+                        <div class="product-price">S/42.90</div>
+                    </div>
+                </a>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn" onclick="addToCart(
+                        'Máscara de Pestañas Volumen X10', 
+                        42.90, 
+                        'https://i.postimg.cc/8z5vLQ8t/mascara-pestanas.jpg',
+                        event
+                    )">
+                        <i class="fas fa-cart-plus"></i> Añadir
+                    </button>
+                    
+                    <a href="https://wa.me/51987654321?text=¡Hola! Estoy interesad@ en la Máscara de Pestañas Volumen X10 de GlasSkin" 
+                    class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Comprar
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Producto 6 -->
+            <div class="product-card">
+                <a href="detalle-kit-maquillaje.html" class="product-card-link">
+                    <div class="product-image">
+                        <span class="product-badge">Oferta</span>
+                        <img src="https://m.media-amazon.com/images/I/61U013u+KBL._AC_UF350,350_QL80_DpWeblab_.jpg" alt="Kit de Maquillaje">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Kit de Regalo</span>
+                        <h3 class="product-title">Kit Completo de Maquillaje</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="product-description">Todo lo esencial para un look completo: base, labial, sombras, rubor y máscara.</p>
+                        <div class="product-price">S/179.90 <span style="text-decoration: line-through; color: #999; font-size: 1rem;">S/229.90</span></div>
+                    </div>
+                </a>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn" onclick="addToCart(
+                        'Kit Completo de Maquillaje', 
+                        179.90, 
+                        'https://i.postimg.cc/8z5vLQ8t/kit-maquillaje.jpg',
+                        event
+                    )">
+                        <i class="fas fa-cart-plus"></i> Añadir
+                    </button>
+                    
+                    <a href="https://wa.me/51987654321?text=¡Hola! Estoy interesad@ en el Kit Completo de Maquillaje de GlasSkin" 
+                    class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> Comprar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="copyright">© 2024 GlasSkin. Todos los derechos reservados.</p>
+        <p><i class="fas fa-map-marker-alt"></i> Lima, Perú</p>
+    </footer>
+
+    <script>
+        // Función mejorada para añadir al carrito
+        function addToCart(name, price, image, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // 1. Validar parámetros
+            if(!name || !price || !image) {
+                console.error("Faltan parámetros en addToCart");
+                return;
+            }
+
+            // 2. Lógica del carrito
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProductIndex = cart.findIndex(item => item.name === name);
+            
+            if (existingProductIndex !== -1) {
+                cart[existingProductIndex].quantity += 1;
+            } else {
+                cart.push({ 
+                    name: name, 
+                    price: parseFloat(price), 
+                    image: image, 
+                    quantity: 1 
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCounter();
+            
+            // 3. Mostrar SweetAlert con validación
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: `<strong style="color: var(--rosa-medio)">¡Añadido!</strong>`,
+                    html: `<p style="color: #555">"${name}" ahora está en tu carrito</p>`,
+                    imageUrl: image,
+                    imageWidth: 100,
+                    imageHeight: 100,
+                    imageAlt: name,
+                    background: 'var(--rosa-claro)',
+                    confirmButtonColor: 'var(--azul-cielo)',
+                    confirmButtonText: '<i class="fas fa-check"></i> ¡Entendido!',
+                    customClass: {
+                        popup: 'sweet-popup',
+                        title: 'sweet-title'
+                    }
+                });
+            } else {
+                alert(`¡${name} añadido al carrito!`); // Fallback si no carga SweetAlert
+            }
+        }
+
+        // Función para actualizar el contador
+        function updateCartCounter() {
+            try {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const totalItems = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+                const counter = document.getElementById('cart-counter');
+                
+                if (counter) {
+                    counter.textContent = totalItems;
+                    counter.style.display = totalItems > 0 ? 'flex' : 'none';
+                }
+            } catch (e) {
+                console.error("Error actualizando contador:", e);
+            }
+        }
+
+        // Inicialización segura
+        document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar contador
+            updateCartCounter();
+            
+            // Delegación de eventos para mejor performance
+            document.body.addEventListener('click', function(e) {
+                // Manejar clicks en botones "Añadir"
+                if (e.target.closest('.add-to-cart-btn')) {
+                    const btn = e.target.closest('.add-to-cart-btn');
+                    const name = btn.getAttribute('data-name') || btn.parentElement.querySelector('.product-title').textContent;
+                    const price = btn.getAttribute('data-price') || btn.parentElement.querySelector('.product-price').textContent.replace('S/', '');
+                    const img = btn.getAttribute('data-img') || btn.closest('.product-card').querySelector('img').src;
+                    
+                    addToCart(name, price, img, e);
+                }
+                
+                // Evitar que los clicks en botones activen el enlace de la tarjeta
+                if (e.target.closest('.product-actions')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            });
+        });
+
+        // Verificar que SweetAlert se cargó
+        if (typeof Swal === 'undefined') {
+            console.warn("SweetAlert no se cargó correctamente");
+            // Opcional: Cargarlo dinámicamente
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+            document.head.appendChild(script);
+        }
+    </script>
+</body>
+</html>
